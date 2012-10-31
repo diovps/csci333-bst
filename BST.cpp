@@ -71,13 +71,23 @@ void BST<T>::remove(T v) {
   }else{
 	ios = &((*ios)->getRightChild());
 	
+	bool hIos = (*ios)->getLeftChild()==0;
+	
 	while((*ios)->getLeftChild()!=0){
 		ios = &((*ios)->getLeftChild());
 	}
   	
-	(*ios)->setLeftChild(*((*temp)->getLeftChild()));	
+	Node<T>* leftTree = (*temp)->getLeftChild();
+	Node<T>* rightTree = (*temp)->getRightChild();
+	Node<T>* iosRight = (*ios)->getRightChild();
+
+	(*ios)->setLeftChild(*leftTree);
 	(*temp) = (*ios);
-   
+	
+	if(!hIos){
+		rightTree->setLeftChild(*iosRight);
+		(*temp)->setRightChild(*rightTree);	
+   	}
    }
    
 }

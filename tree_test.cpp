@@ -1,4 +1,5 @@
 #include "BST.h"
+#include <iostream>
 
 int main() {
   BST<int>* bst = new BST<int>();
@@ -8,10 +9,7 @@ int main() {
   bst->insert(3);
   bst->insert(2);
   bst->insert(7);
-  //bst->insert(12);
 
-
+  bst->remove(7);
   bst->print();
-
-
 }

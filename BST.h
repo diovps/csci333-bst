@@ -9,11 +9,12 @@ class BST {
  private:
   Node<T>* root;
   void traversalPrint(Node<T>* root);
-
+  Node<T>* findOutsourced(Node<T>* head,T v);
+ 
  public:
   BST<T>();
   ~BST<T>();
-
+  
   bool find(T v);
   void remove(T v);
   void insert(T v);

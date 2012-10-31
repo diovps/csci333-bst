@@ -14,9 +14,26 @@ BST<T>::~BST() {
 
 template <typename T>
 bool BST<T>::find(T v) {
-  Node<T>* temp = new Node<T>(v);
-  root = temp;  
-  return true;
+  
+  Node<T>* goal = findOutsourced(root,v);
+  
+  if(goal!=0)
+  	return goal->getValue()==v;
+  return false;
+}
+
+template <typename T>
+Node<T>* BST<T>::findOutsourced(Node<T>* head, T v){
+	
+	if(head == 0) return head;
+
+	if(head->getValue()<v){
+		return findOutsourced(head->getRightChild(),v);
+	}else if(head->getValue()>v){
+		return findOutsourced(head->getLeftChild(),v);
+	}else{
+		return head;
+	}
 }
 
 template <typename T>
@@ -36,8 +53,33 @@ void BST<T>::insert(T v) {
 
 template <typename T>
 void BST<T>::remove(T v) {
-  Node<T>* temp = new Node<T>(v);
-  root = temp;
+  Node<T>** temp = &root;
+  while(*temp!=0 && (*temp)->getValue()!=v){
+	if((*temp)->getValue()<v)
+	    temp = &((*temp)->getRightChild());
+	else{
+	    temp = &((*temp)->getLeftChild());
+	}
+  }
+  if(*temp==0) return;
+  Node<T>** ios = temp;
+  
+  if((*temp)->getRightChild()==0){
+	Node<T>* something = (*temp);
+	(*temp) = (*temp)->getLeftChild();
+	delete something;
+  }else{
+	ios = &((*ios)->getRightChild());
+	
+	while((*ios)->getLeftChild()!=0){
+		ios = &((*ios)->getLeftChild());
+	}
+  	
+	(*ios)->setLeftChild(*((*temp)->getLeftChild()));	
+	(*temp) = (*ios);
+   
+   }
+   
 }
 
 template <typename T>

@@ -17,6 +17,5 @@ int main() {
   bst->insert(11);
   bst->insert(17);
 
-  bst->remove(5);
-  bst->print();
+  bst->treePrint();
 }

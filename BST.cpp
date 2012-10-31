@@ -1,5 +1,7 @@
 #include "BST.h"
 #include <iostream>
+#include <list>
+#include <vector>
 
 template <typename T>
 BST<T>::BST() {
@@ -93,6 +95,67 @@ void BST<T>::remove(T v) {
 }
 
 template <typename T>
+void BST<T>::treePrint(){
+	std::list<Node<T>* > s;
+	
+	std::vector<std::vector<T> > levels;
+
+	s.push_front(root);
+	int currentLevel = 1;
+	int nextLevel = 0;
+	int depth = 0;
+	
+	while(!s.empty()){
+		Node<T>* val = s.front();
+		s.pop_front();
+		
+		//std::cout << val->getValue() << " ";
+		currentLevel--;
+		
+		std::vector<T> row;
+		levels.push_back(row);
+
+		if(val->getLeftChild()!=0){
+			s.push_back(val->getLeftChild());
+			levels[depth].push_back(val->getLeftChild()->getValue());
+			nextLevel++;
+		}else{
+			levels[depth].push_back(0);
+		}
+		
+		if(val->getRightChild()!=0){
+		        s.push_back(val->getRightChild());
+			levels[depth].push_back(val->getRightChild()->getValue());
+			nextLevel++;
+		}else{
+			levels[depth].push_back(0);	
+		}
+		
+		if(currentLevel==0){
+			depth++;
+			/*std::cout << "Depth: " << depth << std::endl;
+			std::cout << std::endl; 
+			std::cout << std::endl;
+			*/
+			currentLevel = nextLevel;
+			nextLevel = 0;
+		}
+	}
+		
+	for(int i = 0; i < depth; i++){
+		for(int j = 0; j < (int)levels[i].size(); j++){
+			if(levels[i][j] == 0){
+				std::cout << "       ";
+			}else{
+				std::cout << levels[i][j];
+			}
+		}
+		std::cout << std::endl;	
+	}
+}
+
+
+template <typename T>
 void BST<T>::print() {
   traversalPrint(root);
 }
@@ -108,4 +171,4 @@ void BST<T>::traversalPrint(Node<T>* root) {
 
 template class BST<int>;
 template class BST<double>;
-template class BST<std::string>;
+//template class BST<std::string>;

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <iomanip>
+#include <math.h>
 
 template <typename T>
 BST<T>::BST() {
@@ -99,22 +101,25 @@ void BST<T>::treePrint(){
 	std::list<Node<T>* > s;
 	
 	std::vector<std::vector<T> > levels;
-
+	std::vector<T> someRows;
+	levels.push_back(someRows);
+	
+	levels[0].push_back(root->getValue());	
 	s.push_front(root);
+	
 	int currentLevel = 1;
 	int nextLevel = 0;
-	int depth = 0;
+	int depth = 1;
 	
 	while(!s.empty()){
 		Node<T>* val = s.front();
 		s.pop_front();
 		
-		//std::cout << val->getValue() << " ";
 		currentLevel--;
 		
 		std::vector<T> row;
 		levels.push_back(row);
-
+		
 		if(val->getLeftChild()!=0){
 			s.push_back(val->getLeftChild());
 			levels[depth].push_back(val->getLeftChild()->getValue());
@@ -133,25 +138,28 @@ void BST<T>::treePrint(){
 		
 		if(currentLevel==0){
 			depth++;
-			/*std::cout << "Depth: " << depth << std::endl;
-			std::cout << std::endl; 
-			std::cout << std::endl;
-			*/
 			currentLevel = nextLevel;
 			nextLevel = 0;
 		}
 	}
-		
-	for(int i = 0; i < depth; i++){
-		for(int j = 0; j < (int)levels[i].size(); j++){
-			if(levels[i][j] == 0){
-				std::cout << "       ";
+	
+	int width;
+
+	for(int i = 0; i < depth-1;i++){	
+		width = pow(2.0,depth-i-1);
+		std::cout << std::setw(width) << levels[i][0];
+		for(int j = 1; j < (int)levels[i].size();j++){
+			if(levels[i][j]!=0){
+				std::cout << std::setw(width+(depth-i)) << 
+					std::setfill(' ') << levels[i][j];
 			}else{
-				std::cout << levels[i][j];
+				std::cout << std::setw(width+(depth-i)) << 
+					std::setfill(' ') << " ";
 			}
 		}
-		std::cout << std::endl;	
-	}
+		std::cout << std::endl;
+			
+	}	
 }
 
 

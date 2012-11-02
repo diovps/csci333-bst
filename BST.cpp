@@ -154,8 +154,8 @@ void BST<T>::treePrint(){
 	
 	int width;
 
-	for(int i = 0; i < depth-1;i++){	
-		width = pow(1.75,depth-i-1);
+	for(int i = 0; i < depth;i++){	
+		width = pow(1.625,depth-i-1);
 		if(isPresent[i][0]){
 			std::cout << std::setw(width) << levels[i][0];
 		}else{
@@ -164,10 +164,10 @@ void BST<T>::treePrint(){
 
 		for(int j = 1; j < (int)levels[i].size();j++){
 			if(isPresent[i][j]){
-				std::cout << std::setw(width+1) << 
+				std::cout << std::setw(pow(1.75,depth-i-1)) << 
 					std::setfill(' ') << levels[i][j];
 			}else{
-				std::cout << std::setw(width+1) << 
+				std::cout << std::setw(pow(1.75,depth-i-1)) << 
 					std::setfill(' ') << " ";
 			}
 		}
